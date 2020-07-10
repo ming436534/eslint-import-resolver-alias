@@ -108,7 +108,7 @@ function findModulePath(request, paths, extArray) {
     };
   } catch (error) {
     return {
-      found: false,
+      found: (error + '').includes('main'),
       path: null
     };
   }
