@@ -96,16 +96,22 @@ function findModulePath(request, paths, extArray) {
   }
 
   // `Module._findPath` use `Module._extensions` to find a module
-  const filename = Module._findPath(request, paths);
-
-  if (extArray) {
-    Module._extensions = originExtensions;
+  try {
+    const filename = Module._findPath(request, paths);
+    if (extArray) {
+      Module._extensions = originExtensions;
+    }
+  
+    return {
+      found: !!filename,
+      path: filename || null
+    };
+  } catch (error) {
+    return {
+      found: false,
+      path: null
+    };
   }
-
-  return {
-    found: !!filename,
-    path: filename || null
-  };
 }
 
 // resolve node_modules lookup paths
